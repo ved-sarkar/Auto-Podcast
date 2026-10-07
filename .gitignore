@@ -1,0 +1,33 @@
+node_modules/
+dist/
+dist-*/
+coverage/
+.vite/
+.cache/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets*.json
+recordings/
+transcripts/
+private/
+datasets/
+exports/
+backups/
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.ogg
+*.flac
+*.mp4
+*.mov
+# Only synthetic authored fixtures belong in examples/.
+# Ignore rules are not a substitute for reviewing every staged file.
