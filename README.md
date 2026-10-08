@@ -2,7 +2,13 @@
 
 A browser workspace for reviewing proposed cuts to interview transcripts. Load the built-in fictional interview to explore the original text, proposed edit, and highlighted removals without an account or API key.
 
-Optional provider integrations can transcribe audio and propose transcript edits. The app exports **text**; it does not cut, render, or export edited audio.
+## Why I built it
+
+I started Auto-Podcast in 2023 to help my sister, who was editing long research podcasts while doing her PhD. Working through hours of recordings meant spending a lot of time on filler words, silences, and repetition. I wanted a tool that could handle that first editing pass so she could spend more of her time on the content.
+
+## What it does today
+
+The current version supports deletion-only transcript review and **text export**, with optional provider integrations for transcription and proposed edits. It does not cut or export edited audio.
 
 ```mermaid
 flowchart TD
@@ -13,18 +19,34 @@ flowchart TD
     Review --> Export[Copy or download edited text]
 ```
 
+## Review a proposed edit
+
+The review starts with the source text. In the unified view, proposed removals stay visible in context instead of disappearing into a rewritten transcript. The fictional example below makes three deletions; each removed span is also listed for inspection.
+
+![Auto-Podcast fictional interview with proposed deletions highlighted in the original transcript](docs/screenshots/offline-demo.png)
+
+*Three proposed cuts remain visible in the original text.*
+
+Switch to the split view to compare the original and edited text side by side before using the copy or text-download controls. Keeping the two versions together makes it easier to check whether a deletion changes the speaker’s meaning.
+
+![Auto-Podcast original and edited fictional interview shown side by side](docs/screenshots/transcript-review.png)
+
+*The same proposed edit in split view, ready for a final comparison.*
+
+These screenshots show the actual React interface running the authored offline fixture. [Capture scope](docs/SCREENSHOTS.md)
+
 ## Try the offline demo
 
-Requires Node.js 20.19 or later and npm. The release checks used Node.js 23.9.0 and existing local dependencies; a fresh installation has not been verified.
+Requires Node.js 20.19 or later and npm. Recorded release checks used Node.js 23.9.0 and existing local dependencies. [Validation scope](docs/VALIDATION.md)
 
 ```sh
 npm ci --ignore-scripts
 npm run dev
 ```
 
-Open the local address printed by Vite and select **Load synthetic demo**. No key is needed. The checked-in demo is an authored fixture, not a model-generated result or a real interview. Live provider controls are disabled by default.
+Open the local address printed by Vite and select **Load synthetic demo**. No key is needed; live provider controls are disabled by default.
 
-The installation command downloads dependencies and deliberately skips lifecycle scripts. Review the lockfile before installing. If your platform needs a dependency build step, inspect that dependency's instructions before running it; this preparation did not install packages or run downloaded setup scripts.
+`--ignore-scripts` skips dependency lifecycle scripts. Review the lockfile and any platform-specific build step before running it.
 
 ```sh
 npm test
@@ -40,17 +62,17 @@ npm run preview
 - Derived removal records instead of trusting model-generated explanations or timestamps.
 - Explicit provider selection and confirmation before content is sent off-device.
 
-The validator compares whitespace-delimited tokens, including their punctuation and case. An accepted edit must be a subsequence of the original. Whitespace may change, and repeated tokens are matched from left to right. **Deleting words can still change meaning**: a removed negation, speaker label, caveat, or timestamp needs human review. This is a structural check, not a guarantee of editorial quality or factual accuracy.
+An accepted edit preserves the original token order, punctuation and case; whitespace may change, and repeated tokens are matched from left to right. **Deletions still need human review**: removing a negation, speaker label or caveat can change the meaning.
 
 ## Optional live mode
 
-Copy `.env.example` to `.env.local`, set `VITE_ENABLE_LIVE_API=true`, and restart Vite (or rebuild). This flag is public configuration, not a secret. Never place provider keys in a `VITE_*` variable or a committed file.
+Copy `.env.example` to `.env.local`, set `VITE_ENABLE_LIVE_API=true`, and restart Vite (or rebuild). The flag is public configuration; enter provider keys only through **API Settings**, never in `VITE_*` variables or committed files.
 
-In **API Settings**, provide a Gemini key and an explicit model ID supported by your account. An optional OpenAI key selects Whisper for audio transcription; without it, audio goes to the configured Gemini model. Editing always uses Gemini. Applying settings makes no connection test or generation request. Starting processing asks for confirmation and may incur provider charges.
+Provide a Gemini key and supported model ID. Editing uses Gemini; audio transcription uses Whisper when an OpenAI key is supplied, otherwise Gemini. Processing asks for confirmation before sending content to the provider and may incur charges.
 
-Keys are held in this tab's JavaScript memory, not saved by this version to browser storage. Refreshing clears them. Browser memory is not a secure server-side secret store; use this as a personal prototype, not a hosted service for other users' credentials. Previously stored keys from an older version are not read or removed automatically; clear that site's browser storage if upgrading.
+Keys stay in this tab's memory and clear on refresh. If upgrading from an older version, clear any keys previously saved in the site's browser storage. This credential flow is intended for personal use.
 
-Live compatibility, model availability, audio limits, account permissions, pricing, and provider policies were not verified. The pinned provider SDK is inherited from the original source and has not been upgraded. See [privacy and data flow](docs/PRIVACY.md) before enabling live mode.
+Live provider compatibility has not been verified with the inherited SDK version. See [privacy and data flow](docs/PRIVACY.md) before enabling this mode.
 
 ## Project layout
 
