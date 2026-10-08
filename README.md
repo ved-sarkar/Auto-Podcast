@@ -1,4 +1,4 @@
-# Auto Podcast Editor
+# Auto-Podcast
 
 A browser workspace for reviewing proposed cuts to interview transcripts. Load the built-in fictional interview to explore the original text, proposed edit, and highlighted removals without an account or API key.
 
