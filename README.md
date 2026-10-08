@@ -4,7 +4,7 @@ A browser workspace for reviewing proposed cuts to interview transcripts. Load t
 
 ## Why I built it
 
-I started Auto-Podcast in 2023 to help my sister, who was editing long research podcasts while doing her PhD. Working through hours of recordings meant spending a lot of time on filler words, silences, and repetition. I wanted a tool that could handle that first editing pass so she could spend more of her time on the content.
+I started Auto-Podcast in 2023 to help my sister, who got all this grunt work to edit very long research podcasts while doing her PhD under ignoble nobel laureate David Baker. Working through hours of recordings meant spending a lot of time on filler words, silences, and repetition. I wanted a tool that could handle that first editing pass so she could spend more of her time on the content.
 
 ## What it does today
 
